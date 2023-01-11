@@ -1,9 +1,9 @@
-import Notes from "../models/notes.model.js";
+import NoteSchema from "../models/notes.model.js";
 import asyncHandler from "../utils/asyncHandler.js";
 import CustomError from "../utils/customError.js";
 import sendResponse from "../utils/sendResponse.js";
 
-export const Home = (req, res) => {
+export const Home = (_req, res) => {
   res.status(200).json({
     message: "Hello Silico Note App",
   });
@@ -21,7 +21,7 @@ export const addNote = asyncHandler(async (req, res) => {
     notes: [{ title: `Hello ${name}`, note: "Welcome to Silico Note App." }],
   };
 
-  const newNote = await Notes.create(data);
+  const newNote = await NoteSchema.create(data);
   await newNote.save({ validateBeforeSave: false });
 
   sendResponse(res, newNote);
@@ -34,7 +34,7 @@ export const updateNote = asyncHandler(async (req, res) => {
     throw new CustomError("All fields are required", 400);
   }
 
-  const existingNote = await Notes.findOne({ email });
+  const existingNote = await NoteSchema.findOne({ email });
 
   if (!existingNote) {
     throw new CustomError("user not found", 400);
@@ -48,7 +48,7 @@ export const updateNote = asyncHandler(async (req, res) => {
 });
 
 export const getNotes = asyncHandler(async (_req, res) => {
-  const notes = await Notes.find();
+  const notes = await NoteSchema.find();
 
   if (!notes) {
     throw new CustomError("Notes not found", 404);
@@ -66,7 +66,7 @@ export const deleteNote = asyncHandler(async (req, res) => {
     throw new CustomError("All fields are required", 400);
   }
 
-  let allNotes = await Notes.findOne({ email });
+  let allNotes = await NoteSchema.findOne({ email });
 
   //   console.log(allNotes.notes[0].id);
 

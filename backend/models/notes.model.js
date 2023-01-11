@@ -5,6 +5,7 @@ const NotesSchema = new mongoose.Schema(
     email: {
       type: String,
       required: [true, "Email is required"],
+      unique: true,
     },
 
     notes: [
@@ -22,5 +23,5 @@ const NotesSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const model = mongoose.model("Notes", NotesSchema);
+const model = mongoose.model("Note", NotesSchema);
 export default model;
