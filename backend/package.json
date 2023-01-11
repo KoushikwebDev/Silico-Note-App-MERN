@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "This is a Note taking app.",
   "main": "server.js",
+  "type": "module",
   "scripts": {
     "test": "jest",
     "start": "node server.js",
