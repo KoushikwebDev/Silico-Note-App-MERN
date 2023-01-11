@@ -1,5 +1,5 @@
 {
-  "name": "silicon-note-app",
+  "name": "silico-note-app",
   "version": "1.0.0",
   "description": "This is a Note taking app.",
   "main": "server.js",
