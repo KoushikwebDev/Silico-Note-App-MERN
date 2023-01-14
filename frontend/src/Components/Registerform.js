@@ -37,7 +37,6 @@ function Registerform() {
     } else {
       setErrorMessage("");
     }
-    console.log(userDetails);
     try {
       const { user } = await createUserWithEmailAndPassword(
         auth,
@@ -53,7 +52,6 @@ function Registerform() {
         email: userDetails.email,
         name: userDetails.name,
       });
-      console.log(user);
       navigate("/");
     } catch (error) {
       console.log(error.message);

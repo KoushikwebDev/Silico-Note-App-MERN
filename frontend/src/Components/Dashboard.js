@@ -36,9 +36,7 @@ function Dashboard() {
   }, [userData]);
 
   const fetchData = async () => {
-    console.log("fetch runn");
     auth.onAuthStateChanged((user) => {
-      // console.log(user);
       setUserData(user);
       if (!user) {
         navigate("/login");
@@ -63,9 +61,7 @@ function Dashboard() {
     e.preventDefault();
     try {
       let user = auth.currentUser;
-      let res = await sendEmailVerification(user);
-      console.log(user, res);
-
+      await sendEmailVerification(user);
       alert(
         "Email verifiaction mail send, if not found in primary mail box, check in spam"
       );
@@ -124,13 +120,11 @@ function Dashboard() {
     }, 2000);
     userNote.title = "";
     userNote.note = "";
-    console.log("complete");
   };
 
   // Fetching Data from Backend 😎😎😎
 
   const fetchUserNotes = async () => {
-    console.log("fetchUser ruinng");
     let promise = axios.get(
       `${process.env.REACT_APP_BACKEND_URL}/notes/${userData.email}`
     );
@@ -140,15 +134,12 @@ function Dashboard() {
       alert(err);
       return;
     }
-    console.log(data.data[0].notes);
     setNotes(data.data[0].notes);
     setAllNote(data.data[0].notes);
   };
 
   // edit method
   const editNote = async (title, note, id) => {
-    console.log("running");
-
     titleRef.current.value = title;
     noteRef.current.value = note;
     setholdId(id);
@@ -163,7 +154,6 @@ function Dashboard() {
     }, 1000);
     updateBtnRef.current.style.display = "block";
     addBtnRef.current.style.display = "none";
-    console.log(titleRef.current.value);
   };
 
   // update method while editing
@@ -227,11 +217,9 @@ function Dashboard() {
   };
 
   // search method
-
   const searchNote = () => {
     let response = allNotes.filter((note) => {
       if (searchRef.current.value === "") {
-        console.log(allNotes);
         return allNotes;
       } else {
         return note.title

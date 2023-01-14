@@ -21,15 +21,12 @@ function LoginForm() {
     } else {
       setErrorMessage("");
     }
-    console.log(userDetails);
     try {
-      const { user } = await signInWithEmailAndPassword(
+      await signInWithEmailAndPassword(
         auth,
         userDetails.email,
         userDetails.password
       );
-
-      console.log(user);
       navigate("/");
     } catch (error) {
       console.log(error.message);

@@ -47,7 +47,6 @@ function Navbar({ name, logout }) {
           }),
         }
       );
-      // console.log(res);
       if (res) {
         setMessage("Your Message Submitted Successfully");
         setUserData({ name: "", email: "", message: "" });

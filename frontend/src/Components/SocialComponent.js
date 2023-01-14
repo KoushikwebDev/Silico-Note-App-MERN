@@ -19,16 +19,11 @@ function SocialComponent() {
 
       setErrorMessage("");
       navigate("/");
-      // console.log(user, token);
     } catch (error) {
-      // Handle Errors here.
       const errorCode = error.code;
       const errorMessage = error.message;
-      // The email of the user's account used.
       const email = error.customData.email;
-      // The AuthCredential type that was used.
       const credential = GoogleAuthProvider.credentialFromError(error);
-
       console.log(errorCode, errorMessage, email, credential);
       setErrorMessage(error.message);
     }
@@ -43,14 +38,10 @@ function SocialComponent() {
       navigate("/");
     } catch (error) {
       console.log(error);
-      // Handle Errors here.
       const errorCode = error.code;
       const errorMessage = error.message;
-      // The email of the user's account used.
       const email = error.customData.email;
-      // The AuthCredential type that was used.
       const credential = FacebookAuthProvider.credentialFromError(error);
-
       console.log(errorCode, errorMessage, email, credential);
       setErrorMessage(error.message);
     }
