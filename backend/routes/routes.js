@@ -2,6 +2,7 @@ import express from "express";
 import {
   addNote,
   deleteNote,
+  editNote,
   getNotes,
   Home,
   updateNote,
@@ -13,7 +14,8 @@ Router.get("/home", Home);
 
 Router.post("/addnote", addNote);
 Router.put("/updatenote", updateNote);
-Router.get("/notes", getNotes);
-Router.delete("/deletenote/:id", deleteNote);
+Router.get("/notes/:email", getNotes);
+Router.delete("/deletenote/:email/:id", deleteNote);
+Router.put("/editNote/:id", editNote);
 
 export default Router;

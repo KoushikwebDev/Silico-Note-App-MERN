@@ -3,6 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import SocialComponent from "./SocialComponent";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../Firebase/firebase.config";
+import axios from "axios";
 
 function Registerform() {
   const navigate = useNavigate();
@@ -48,7 +49,10 @@ function Registerform() {
           displayName: userDetails.name,
         });
       }
-
+      await axios.post(`${process.env.REACT_APP_BACKEND_URL}/addnote`, {
+        email: userDetails.email,
+        name: userDetails.name,
+      });
       console.log(user);
       navigate("/");
     } catch (error) {

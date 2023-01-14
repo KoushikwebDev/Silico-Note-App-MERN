@@ -40,27 +40,29 @@ export const updateNote = asyncHandler(async (req, res) => {
     throw new CustomError("user not found", 400);
   }
 
-  existingNote.notes.push({ title, note });
+  existingNote.notes.unshift({ title, note });
 
-  existingNote.save({ validateBeforeSave: false });
+  await existingNote.save({ validateBeforeSave: false });
 
   sendResponse(res, existingNote);
 });
 
-export const getNotes = asyncHandler(async (_req, res) => {
-  const notes = await NoteSchema.find();
+export const getNotes = asyncHandler(async (req, res) => {
+  const { email } = req.params;
+  if (!email) {
+    throw new CustomError("email is required", 404);
+  }
+  const notes = await NoteSchema.find({ email });
 
   if (!notes) {
     throw new CustomError("Notes not found", 404);
   }
 
-  sendResponse(res, notes);
+  res.status(200).send(notes);
 });
 
 export const deleteNote = asyncHandler(async (req, res) => {
-  const { email } = req.body;
-
-  const { id } = req.params;
+  const { email, id } = req.params;
 
   if (!(email && id)) {
     throw new CustomError("All fields are required", 400);
@@ -68,16 +70,49 @@ export const deleteNote = asyncHandler(async (req, res) => {
 
   let allNotes = await NoteSchema.findOne({ email });
 
-  //   console.log(allNotes.notes[0].id);
-
   let newArr = allNotes.notes.filter((item) => {
     return item.id !== id;
   });
-  //   console.log(newArr);
 
   allNotes.notes = newArr;
 
-  allNotes.save({ validateBeforeSave: false });
+  await allNotes.save({ validateBeforeSave: false });
 
   sendResponse(res, allNotes);
+});
+
+export const editNote = asyncHandler(async (req, res) => {
+  const { title, note, email } = req.body;
+  const id = req.params.id;
+
+  if (!(title && note && email && id)) {
+    throw new CustomError("All fields are required", 400);
+  }
+
+  const existingNote = await NoteSchema.findOne({ email });
+
+  if (!existingNote) {
+    throw new CustomError("user not found", 400);
+  }
+  let filterNotes = existingNote.notes.filter((note) => {
+    return note.id !== id;
+  });
+  let singleOne = existingNote.notes.filter((note) => {
+    return note.id == id;
+  });
+
+  let newValue = {
+    title,
+    note,
+    CrgeatedAt: singleOne.CrgeatedAt,
+    UpdatedAt: Date.now(),
+  };
+
+  let finalNotes = [newValue, ...filterNotes];
+
+  existingNote.notes = finalNotes;
+
+  await existingNote.save({ validateBeforeSave: false });
+
+  sendResponse(res, existingNote);
 });
