@@ -11,7 +11,7 @@ function LoginForm() {
     email: "",
     password: "",
   });
-  const [erorMessage, setErrorMessage] = useState("Nothing");
+  const [erorMessage, setErrorMessage] = useState("");
 
   const submitHandler = async (e) => {
     e.preventDefault();
