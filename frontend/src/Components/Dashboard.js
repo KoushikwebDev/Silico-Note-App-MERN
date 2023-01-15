@@ -38,7 +38,7 @@ function Dashboard() {
 
   const fetchData = async () => {
     auth.onAuthStateChanged((user) => {
-      setUserData(user.reloadUserInfo);
+      setUserData(user);
 
       if (!user) {
         navigate("/login");
