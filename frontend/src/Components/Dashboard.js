@@ -7,6 +7,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 
 function Dashboard() {
   const navigate = useNavigate();
+
   const [userNote, setUserNote] = useState({
     title: "",
     note: "",
@@ -23,24 +24,24 @@ function Dashboard() {
   const [searchText, setSearchText] = useState("");
   const [allNotes, setAllNote] = useState(Notes);
   const [userData, setUserData] = useState({});
-  const [reload, setReload] = useState("");
+
   // Auth System 😎😎😎😎
   useEffect(() => {
-    let onload = async () => {
+    const onload = async () => {
       await fetchData();
-
       await fetchUserNotes();
     };
     onload();
+
     // eslint-disable-next-line
-  }, [reload]);
+  }, [userData]);
 
   const fetchData = async () => {
     auth.onAuthStateChanged((user) => {
-      setUserData(user);
+      setUserData(user.reloadUserInfo);
+
       if (!user) {
         navigate("/login");
-        return user;
       }
     });
   };
@@ -130,13 +131,14 @@ function Dashboard() {
     );
 
     const [data, err] = await handlePromise(promise);
-    setReload("setReload");
+
     if (err) {
       alert(err);
       return;
     }
-    setNotes(data.data[0].notes);
-    setAllNote(data.data[0].notes);
+    // console.log(data.data[0]?.notes);
+    setNotes(data.data[0]?.notes);
+    setAllNote(data.data[0]?.notes);
   };
 
   // edit method
@@ -350,12 +352,12 @@ function Dashboard() {
                 </div>
               </div>
               <p className="mt-2 text-lg mb-3 text-[#0D0D0D] ">{note.note}</p>
-              <span className="text-[10px] md:text-sm  inline-block mr-3">
+              <span className="text-[7px] md:text-sm block md:inline-block mb-[-29px] md:mb-0  mr-3">
                 <span className="text-blue-400">createdAt: </span>
-                {new Date(note?.CreatedAt).toString()},
+                {new Date(note?.CreatedAt).toString()}
               </span>
               <br className="md:hidden" />
-              <span className="text-[10px] md:text-sm ">
+              <span className="text-[7px] md:text-sm ">
                 <span className="text-blue-400">updatedAt: </span>
                 {note.UpdatedAt
                   ? new Date(note?.UpdatedAt).toString()

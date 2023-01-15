@@ -57,6 +57,7 @@ export const getNotes = asyncHandler(async (req, res) => {
   if (!email) {
     throw new CustomError("email is required", 404);
   }
+  console.log(email);
   const notes = await NoteSchema.find({ email });
 
   if (!notes) {
