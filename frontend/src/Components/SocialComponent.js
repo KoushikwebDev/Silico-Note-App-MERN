@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { auth, G_Provider, F_Provider } from "../Firebase/firebase.config";
+import axios from "axios";
 import {
   signInWithPopup,
   GoogleAuthProvider,
@@ -15,8 +16,13 @@ function SocialComponent() {
   const googleSignIn = async (e) => {
     e.preventDefault();
     try {
-      await signInWithPopup(auth, G_Provider);
-
+      const result = await signInWithPopup(auth, G_Provider);
+      // The signed-in user info.
+      const user = result.user;
+      await axios.post(`${process.env.REACT_APP_BACKEND_URL}/addnote`, {
+        email: user.email,
+        name: user.displayName,
+      });
       setErrorMessage("");
       navigate("/");
     } catch (error) {
@@ -32,7 +38,12 @@ function SocialComponent() {
   const facebookSignIn = async (e) => {
     e.preventDefault();
     try {
-      await signInWithPopup(auth, F_Provider);
+      const result = await signInWithPopup(auth, F_Provider);
+      const user = result.user;
+      await axios.post(`${process.env.REACT_APP_BACKEND_URL}/addnote`, {
+        email: user.email,
+        name: user.displayName,
+      });
 
       setErrorMessage("");
       navigate("/");

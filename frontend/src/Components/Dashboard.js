@@ -23,7 +23,7 @@ function Dashboard() {
   const [searchText, setSearchText] = useState("");
   const [allNotes, setAllNote] = useState(Notes);
   const [userData, setUserData] = useState({});
-
+  const [reload, setReload] = useState("");
   // Auth System 😎😎😎😎
   useEffect(() => {
     let onload = async () => {
@@ -33,7 +33,7 @@ function Dashboard() {
     };
     onload();
     // eslint-disable-next-line
-  }, [userData]);
+  }, [reload]);
 
   const fetchData = async () => {
     auth.onAuthStateChanged((user) => {
@@ -130,6 +130,7 @@ function Dashboard() {
     );
 
     const [data, err] = await handlePromise(promise);
+    setReload("setReload");
     if (err) {
       alert(err);
       return;
