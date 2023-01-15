@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import SocialComponent from "./SocialComponent";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
@@ -15,6 +15,7 @@ function Registerform() {
   });
 
   const [erorMessage, setErrorMessage] = useState("");
+  const inputPassRef = useRef();
 
   useEffect(() => {
     try {
@@ -58,6 +59,13 @@ function Registerform() {
       setErrorMessage(error.message);
     }
   };
+  const showPassword = () => {
+    if (inputPassRef.current.type === "password") {
+      inputPassRef.current.type = "text";
+    } else {
+      inputPassRef.current.type = "password";
+    }
+  };
   return (
     <div className="bg-grey-lighter min-h-screen flex flex-col">
       <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center pt-10 md:pt-0 md:justify-center px-2 ">
@@ -97,8 +105,9 @@ function Registerform() {
             />
 
             <input
+              ref={inputPassRef}
               type="password"
-              className="block border border-grey-light w-full p-3 rounded mb-4"
+              className="block border border-grey-light w-full p-3 rounded mb-1"
               name="password"
               placeholder="Password"
               value={userDetails.password}
@@ -108,9 +117,18 @@ function Registerform() {
               title="Please enter a strong password including all character."
               // pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{4,}$"
             />
+            <div className="">
+              <input
+                type="checkbox"
+                name="checkbox"
+                className="mr-2"
+                onClick={showPassword}
+              />
+              <span>Show password</span>
+            </div>
 
             <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline lg:tracking-wider  block mx-auto"
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline lg:tracking-wider  block mx-auto mt-2"
               type="submit"
             >
               Create Account

@@ -1,5 +1,5 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { auth } from "../Firebase/firebase.config";
 import SocialComponent from "./SocialComponent";
@@ -12,6 +12,7 @@ function LoginForm() {
     password: "",
   });
   const [erorMessage, setErrorMessage] = useState("");
+  const inputPassRef = useRef();
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -45,6 +46,14 @@ function LoginForm() {
     }
     // eslint-disable-next-line
   }, []);
+
+  const showPassword = () => {
+    if (inputPassRef.current.type === "password") {
+      inputPassRef.current.type = "text";
+    } else {
+      inputPassRef.current.type = "password";
+    }
+  };
 
   return (
     <div className="pt-20 md:pt-0">
@@ -80,6 +89,7 @@ function LoginForm() {
 
               <div className="mt-7">
                 <input
+                  ref={inputPassRef}
                   type="password"
                   placeholder="Password"
                   name="password"
@@ -89,6 +99,15 @@ function LoginForm() {
                     setUserDetails({ ...userDetails, password: e.target.value })
                   }
                 />
+              </div>
+              <div className="mt-2">
+                <input
+                  type="checkbox"
+                  name="checkbox"
+                  className="mr-2 ml-2"
+                  onClick={showPassword}
+                />
+                <span>Show password</span>
               </div>
 
               <div className="mt-7">
