@@ -10,7 +10,7 @@
 
 ## Live
 
-### **[Silico Note App](https://siliconote.netlify.app)**
+### **[Silico Note App](https://siliconote.up.railway.app/register)**
 
 ## Tech Stack
 
