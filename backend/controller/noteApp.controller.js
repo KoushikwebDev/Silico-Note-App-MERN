@@ -15,6 +15,11 @@ export const addNote = asyncHandler(async (req, res) => {
   if (!(email && name)) {
     throw new CustomError("All fields are required", 400);
   }
+  const existingNote = await NoteSchema.findOne({ email });
+
+  if (existingNote) {
+    throw new CustomError("user notes already exists", 400);
+  }
 
   let data = {
     email,
