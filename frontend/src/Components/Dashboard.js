@@ -126,6 +126,11 @@ function Dashboard() {
   // Fetching Data from Backend 😎😎😎
 
   const fetchUserNotes = async () => {
+    console.log("fetch enter");
+    if (!userData.email) {
+      console.log("fetch if enter");
+      return;
+    }
     let promise = axios.get(
       `${process.env.REACT_APP_BACKEND_URL}/notes/${userData.email}`
     );
@@ -133,12 +138,14 @@ function Dashboard() {
     const [data, err] = await handlePromise(promise);
 
     if (err) {
-      alert(err);
+      // alert(err);
       return;
     }
-    // console.log(data.data[0]?.notes);
-    setNotes(data.data[0]?.notes);
-    setAllNote(data.data[0]?.notes);
+    // console.log(userData.email);
+    // console.log(data);
+
+    setNotes(data.data?.notes);
+    setAllNote(data.data?.notes);
   };
 
   // edit method
@@ -323,7 +330,6 @@ function Dashboard() {
       <div className="mt-5 px-5 sm:px-10 lg:px-24 pb-4">
         <h2 className="text-xl font-bold">Your Notes : </h2>
       </div>
-
       {Notes?.length ? (
         Notes.map((note, index) => {
           return (

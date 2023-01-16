@@ -49,11 +49,17 @@ function Registerform() {
           displayName: userDetails.name,
         });
       }
-      await axios.post(`${process.env.REACT_APP_BACKEND_URL}/addnote`, {
-        email: userDetails.email,
-        name: userDetails.name,
-      });
-      navigate("/");
+      let response = await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/addnote`,
+        {
+          email: userDetails.email,
+          name: userDetails.name,
+        }
+      );
+
+      if (response) {
+        navigate("/");
+      }
     } catch (error) {
       console.log(error.message);
       setErrorMessage(error.message);

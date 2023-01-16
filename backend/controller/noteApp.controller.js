@@ -27,6 +27,7 @@ export const addNote = asyncHandler(async (req, res) => {
   };
 
   const newNote = await NoteSchema.create(data);
+
   await newNote.save({ validateBeforeSave: false });
 
   sendResponse(res, newNote);
@@ -57,7 +58,8 @@ export const getNotes = asyncHandler(async (req, res) => {
   if (!email) {
     throw new CustomError("email is required", 404);
   }
-  const notes = await NoteSchema.find({ email });
+  const notes = await NoteSchema.findOne({ email });
+  // console.log(notes);
 
   if (!notes) {
     throw new CustomError("Notes not found", 404);
