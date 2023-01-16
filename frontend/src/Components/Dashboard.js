@@ -126,11 +126,10 @@ function Dashboard() {
   // Fetching Data from Backend 😎😎😎
 
   const fetchUserNotes = async () => {
-    console.log("fetch enter");
     if (!userData.email) {
-      console.log("fetch if enter");
       return;
     }
+    console.log(typeof userData.email);
     let promise = axios.get(
       `${process.env.REACT_APP_BACKEND_URL}/notes/${userData.email}`
     );
