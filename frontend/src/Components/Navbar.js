@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 
 function Navbar({ name, logout }) {
   let splitName;
-  if (name !== undefined) {
+  if (name) {
     splitName = name.split(" ");
   }
 

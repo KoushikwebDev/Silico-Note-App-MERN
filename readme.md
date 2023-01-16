@@ -4,7 +4,7 @@
 
 **It is a Note taking App with Authentication System. MERN technology used here.**
 
-## Authors
+## Author
 
 - [@Koushik Saha](https://www.github.com/koushikwebdev)
 
